@@ -60,6 +60,7 @@ class ViewController: UIViewController {
                                                                                  alignment: .top)
                 
                 section.boundarySupplementaryItems = [sectionHeader]
+                
                  
                 return section
                 
@@ -98,9 +99,9 @@ class ViewController: UIViewController {
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: HeaderFill.identifier, for: indexPath) as! HeaderFill
         header.configure()
+        header.headerText(titleSection: data[indexPath.section].title)
         return header
     }
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()

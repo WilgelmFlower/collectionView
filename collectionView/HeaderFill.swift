@@ -12,6 +12,10 @@ class HeaderFill: UICollectionReusableView {
         return label
     }()
     
+    public func headerText(titleSection: String) {
+        label.text = titleSection
+    }
+    
     private let labelTwo: UILabel = {
         let label = UILabel()
         label.textColor = .black
