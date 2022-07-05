@@ -5,12 +5,12 @@ class TabBar: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
-           UITabBar.appearance().barTintColor = .systemBackground
-           tabBar.tintColor = .label
-           setupVCs()
+        UITabBar.appearance().barTintColor = .systemBackground
+        tabBar.tintColor = .label
+        setupNavigationViewController()
     }
     
-    func setupVCs() {
+    func setupNavigationViewController() {
           viewControllers = [
               createNavController(for: ViewController(), title: NSLocalizedString("Library", comment: ""), image: UIImage(systemName: "photo.fill.on.rectangle.fill")),
               createNavController(for: ViewController(), title: NSLocalizedString("For You", comment: ""), image: UIImage(systemName: "heart.text.square")),
@@ -18,15 +18,15 @@ class TabBar: UITabBarController {
               createNavController(for: ViewController(), title: NSLocalizedString("Search", comment: ""), image: UIImage(systemName: "magnifyingglass"))
           ]
       }
-
-fileprivate func createNavController(for rootViewController: UIViewController,
-                                                title: String,
-                                                image: UIImage?) -> UIViewController {
-      let navController = UINavigationController(rootViewController: rootViewController)
-      navController.tabBarItem.title = title
-      navController.tabBarItem.image = image
-      navController.navigationBar.prefersLargeTitles = true
-      rootViewController.navigationItem.title = "Albums"
-      return navController
-  }
+    
+    fileprivate func createNavController(for rootViewController: UIViewController,
+                                         title: String,
+                                         image: UIImage?) -> UIViewController {
+        let navController = UINavigationController(rootViewController: rootViewController)
+        navController.tabBarItem.title = title
+        navController.tabBarItem.image = image
+        navController.navigationBar.prefersLargeTitles = true
+        rootViewController.navigationItem.title = "Albums"
+        return navController
+    }
 }

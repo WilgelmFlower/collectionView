@@ -13,6 +13,7 @@
 		ED40A205284F3B1100FDD88C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ED40A204284F3B1100FDD88C /* Assets.xcassets */; };
 		ED40A208284F3B1100FDD88C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ED40A206284F3B1100FDD88C /* LaunchScreen.storyboard */; };
 		ED40A2142853B83C00FDD88C /* tabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED40A2132853B83C00FDD88C /* tabBar.swift */; };
+		ED5E34592872ECB5003364CE /* ListCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5E34582872ECB5003364CE /* ListCollection.swift */; };
 		ED6F9BFE2862276B00E44179 /* ModelsData.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED6F9BFD2862276B00E44179 /* ModelsData.swift */; };
 		ED72E8AE2856817200911C98 /* HeaderFill.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED72E8AD2856817200911C98 /* HeaderFill.swift */; };
 /* End PBXBuildFile section */
@@ -26,6 +27,7 @@
 		ED40A207284F3B1100FDD88C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		ED40A209284F3B1100FDD88C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		ED40A2132853B83C00FDD88C /* tabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = tabBar.swift; sourceTree = "<group>"; };
+		ED5E34582872ECB5003364CE /* ListCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCollection.swift; sourceTree = "<group>"; };
 		ED6F9BFD2862276B00E44179 /* ModelsData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelsData.swift; sourceTree = "<group>"; };
 		ED72E8AD2856817200911C98 /* HeaderFill.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderFill.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -69,6 +71,7 @@
 				ED40A209284F3B1100FDD88C /* Info.plist */,
 				ED72E8AD2856817200911C98 /* HeaderFill.swift */,
 				ED6F9BFD2862276B00E44179 /* ModelsData.swift */,
+				ED5E34582872ECB5003364CE /* ListCollection.swift */,
 			);
 			path = collectionView;
 			sourceTree = "<group>";
@@ -146,6 +149,7 @@
 				ED72E8AE2856817200911C98 /* HeaderFill.swift in Sources */,
 				ED40A200284F3B1000FDD88C /* ViewController.swift in Sources */,
 				ED40A1FC284F3B1000FDD88C /* AppDelegate.swift in Sources */,
+				ED5E34592872ECB5003364CE /* ListCollection.swift in Sources */,
 				ED40A1FE284F3B1000FDD88C /* SceneDelegate.swift in Sources */,
 				ED40A2142853B83C00FDD88C /* tabBar.swift in Sources */,
 				ED6F9BFE2862276B00E44179 /* ModelsData.swift in Sources */,

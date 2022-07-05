@@ -1,6 +1,6 @@
 import UIKit
-
-struct Albums {
+    
+struct listAlbums {
     
     enum TypeAlbum {
         case albumTwoRows
@@ -11,11 +11,12 @@ struct Albums {
     let type: TypeAlbum
     let title: String
     let button: String?
-    let albums: [Album]
+    let listAlbum: [listAlbumCollection]
 }
-struct Album {
+struct listAlbumCollection {
     var title: String
     var image: UIImage
     var numbersOfPhotos: Int
 }
+
 

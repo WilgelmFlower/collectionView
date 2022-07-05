@@ -1,10 +1,3 @@
-//
-//  AppDelegate.swift
-//  collectionView
-//
-//  Created by Mark Wilhelm on 07.06.2022.
-//
-
 import UIKit
 
 @main
