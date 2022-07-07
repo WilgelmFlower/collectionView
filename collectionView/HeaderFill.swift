@@ -13,7 +13,6 @@ class HeaderFill: UICollectionReusableView {
     
     private let button: UIButton = {
         let button = UIButton()
-        button.setTitle("See All", for: .normal)
         button.setTitleColor(UIColor.systemBlue, for: .normal)
         return button
     }()
@@ -24,9 +23,11 @@ class HeaderFill: UICollectionReusableView {
         return view
     }()
     
-    public func headerText(titleSection: String) {
+    public func headerTextAndButton(titleSection: String, buttonSection: String) {
         label.text = titleSection
+        button.setTitle(buttonSection, for: .normal)
     }
+  
     
     override init(frame: CGRect) {
         super.init(frame: frame)

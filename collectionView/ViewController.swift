@@ -1,37 +1,17 @@
 import UIKit
 
-/*
- struct SFSymbolItem: Hashable {
-     let name: String
-     let image: UIImage
-     
-     init(name: String) {
-         self.name = name
-         self.image = UIImage(systemName: name)!
-     }
- }
- let dataItems = [
-     SFSymbolItem(name: "video"),
-     SFSymbolItem(name: "person.crop.square"),
-     SFSymbolItem(name: "cube"),
-     SFSymbolItem(name: "livephoto"),
-     SFSymbolItem(name: "timelapse"),
-     SFSymbolItem(name: "slowmo"),
-     SFSymbolItem(name: "square.stack.3d.down.right"),
-     SFSymbolItem(name: "camera.viewfinder"),
-     SFSymbolItem(name: "square.and.arrow.down"),
-     SFSymbolItem(name: "eye.slash"),
-     SFSymbolItem(name: "trash"),
- ]
-
-
- */
-
 class ViewController: UIViewController {
+    
+    enum Metric {
+        static let layoutIndent: CGFloat = 12
+        static let leftIndentLayout: CGFloat = 6
+        static let photoRadius: CGFloat = 10
+        static let topIndentVerticalSection: CGFloat = 20
+    }
     
     let data = [
         
-        Albums(type: .albumTwoRows, title: "My Albums", button: nil, albums: [
+        Albums(type: .albumTwoRows, title: "My Albums", button: "See All", albums: [
             Album(title: "Recents", image: #imageLiteral(resourceName: "image8"), numbersOfPhotos: 1092),
             Album(title: "WhatsApp", image: #imageLiteral(resourceName: "image11"), numbersOfPhotos: 109),
             Album(title: "Favourites", image: #imageLiteral(resourceName: "image2"), numbersOfPhotos: 24),
@@ -42,26 +22,37 @@ class ViewController: UIViewController {
             Album(title: "Telegram", image: #imageLiteral(resourceName: "image6"), numbersOfPhotos: 14),
         ]),
         
-        Albums(type: .albumOneRow, title: "People & Places", button: nil, albums: [
+        Albums(type: .albumOneRow, title: "People & Places", button: "See All", albums: [
             Album(title: "Places", image: #imageLiteral(resourceName: "image9"), numbersOfPhotos: 11),
             Album(title: "Summer2021", image: #imageLiteral(resourceName: "image1"), numbersOfPhotos: 8),
             Album(title: "Winter2019", image: #imageLiteral(resourceName: "image7"), numbersOfPhotos: 10),
             Album(title: "Autumn2020", image: #imageLiteral(resourceName: "image4"), numbersOfPhotos: 100)
-            
         ]),
         
-        Albums(type: .list, title: "Media Types", button: nil, albums: [
-        Album(title: "Videos", image: UIImage(systemName: "video")!, numbersOfPhotos: 84),
-        Album(title: "Selfies", image: UIImage(systemName: "person.crop.square")!, numbersOfPhotos: 148)
+        Albums(type: .firstListSection, title: "Media Types", button: nil, albums: [
+            Album(title: "Videos", image: UIImage(systemName: "video"), numbersOfPhotos: 84),
+            Album(title: "Selfies", image: UIImage(systemName: "person.crop.square"), numbersOfPhotos: 148),
+            Album(title: "Live Photos", image: UIImage(systemName: "livephoto"), numbersOfPhotos: 148),
+            Album(title: "Portrait", image: UIImage(systemName: "cube"), numbersOfPhotos: 148),
+            Album(title: "Long Exposure", image: UIImage(systemName: "livephoto"), numbersOfPhotos: 148),
+            Album(title: "Time-lapse", image: UIImage(systemName: "timelapse"), numbersOfPhotos: 148),
+            Album(title: "Slo-mo", image: UIImage(systemName: "slowmo"), numbersOfPhotos: 148),
+            Album(title: "Bursts", image: UIImage(systemName: "square.stack.3d.down.right"), numbersOfPhotos: 148),
+            Album(title: "Screenshots", image: UIImage(systemName: "camera.viewfinder"), numbersOfPhotos: 148)
+        ]),
+        
+        Albums(type: .secondListSection, title: "Utilities", button: nil, albums: [
+            Album(title: "Imports", image: UIImage(systemName: "square.and.arrow.down"), numbersOfPhotos: 84),
+            Album(title: "Hidden", image: UIImage(systemName: "eye.slash"), numbersOfPhotos: 84),
+            Album(title: "Recently Deleted", image: UIImage(systemName: "trash"), numbersOfPhotos: 84)
         ])
-        
-        
       ]
     
     lazy var collectionView: UICollectionView = {
         let cv = UICollectionView(frame: .zero, collectionViewLayout: createLayout())
         cv.translatesAutoresizingMaskIntoConstraints = false
-        cv.register(PhotoCell.self, forCellWithReuseIdentifier: "cell")
+        cv.register(PhotoCell.self, forCellWithReuseIdentifier: PhotoCell.reuseID)
+        cv.register(ListCollection.self, forCellWithReuseIdentifier: ListCollection.reuseID)
         cv.register(HeaderFill.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: HeaderFill.identifier)
         return cv
     }()
@@ -71,7 +62,6 @@ class ViewController: UIViewController {
         configureItem()
         view.addSubview(collectionView)
 
-        
         collectionView.topAnchor.constraint(equalTo: view.topAnchor, constant: 40).isActive = true
         collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10).isActive = true
         collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40).isActive = true
@@ -117,19 +107,18 @@ class ViewController: UIViewController {
                 
             case .albumOneRow:
                 
+                
                 let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(0.5))
                 let contentInset = NSDirectionalEdgeInsets(top: 5, leading: 5, bottom: 10, trailing: 5)
                 
                 let Item = NSCollectionLayoutItem(layoutSize: itemSize)
                 Item.contentInsets = contentInset
                 
-                let group = NSCollectionLayoutGroup.horizontal(
-                    layoutSize: NSCollectionLayoutSize(widthDimension: .absolute(190), heightDimension: .absolute(500)),
-                    subitems: [Item])
+                let group = NSCollectionLayoutGroup.vertical(layoutSize: NSCollectionLayoutSize(widthDimension: .absolute(190), heightDimension: .absolute(260)), subitem: Item, count: 1)
                 
                 let section = NSCollectionLayoutSection(group: group)
                 section.contentInsets = .init(top: 0, leading: 15, bottom: 20, trailing: 0)
-                section.orthogonalScrollingBehavior = .groupPaging
+                section.orthogonalScrollingBehavior = .paging
                 
                 let headerFooterSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
                                                               heightDimension: .estimated(44))
@@ -141,19 +130,47 @@ class ViewController: UIViewController {
                 section.boundarySupplementaryItems = [sectionHeader]
                 
                 return section
-       
                
-            case .list:
-                let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-                                                     heightDimension: .fractionalHeight(1.0))
+            case .firstListSection:
+                
+                let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(52))
+                
                 let item = NSCollectionLayoutItem(layoutSize: itemSize)
-
-                let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-                                                      heightDimension: .absolute(44))
-                let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-
+                item.contentInsets = NSDirectionalEdgeInsets(top: Metric.topIndentVerticalSection, leading: .zero, bottom: .zero, trailing: .zero)
+                
+                let group = NSCollectionLayoutGroup.vertical(layoutSize: itemSize, subitem: item, count: 1)
+                
                 let section = NSCollectionLayoutSection(group: group)
+                
+                section.contentInsets.leading = Metric.layoutIndent
+                
+                let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: itemSize, elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
+                
+                header.zIndex = Int.max
+                section.boundarySupplementaryItems = [header]
+                
                 return section
+                
+            case .secondListSection:
+                
+                let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(52))
+                
+                let item = NSCollectionLayoutItem(layoutSize: itemSize)
+                item.contentInsets = NSDirectionalEdgeInsets(top: Metric.topIndentVerticalSection, leading: .zero, bottom: .zero, trailing: .zero)
+                
+                let group = NSCollectionLayoutGroup.vertical(layoutSize: itemSize, subitem: item, count: 1)
+                
+                let section = NSCollectionLayoutSection(group: group)
+                
+                section.contentInsets.leading = Metric.layoutIndent
+                
+                let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: itemSize, elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
+                
+                header.zIndex = Int.max
+                section.boundarySupplementaryItems = [header]
+                
+                return section
+                
             }
         }
         return layout
@@ -161,7 +178,8 @@ class ViewController: UIViewController {
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: HeaderFill.identifier, for: indexPath) as! HeaderFill
-        header.headerText(titleSection: data[indexPath.section].title)
+        header.headerTextAndButton(titleSection: data[indexPath.section].title, buttonSection: data[indexPath.section].button ?? "")
+        header.frame.size.height = 68
         return header
     }
     
@@ -182,10 +200,36 @@ extension ViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! PhotoCell
-        cell.data = self.data[indexPath.section].albums[indexPath.item]
-        return cell
+        
+        let data = data[indexPath.section]
+        let item = data.albums[indexPath.row]
+        
+        switch data.type {
+            
+        case .firstListSection:
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ListCollection.reuseID, for: indexPath) as? ListCollection else { return UICollectionViewCell() }
+            cell.iconView.image = item.image ?? UIImage(named: "")
+            cell.nameLabel.text = item.title
+            cell.numberPhotosLabel.text = String(item.numbersOfPhotos)
+            cell.lineSeparators.isHidden = indexPath.row == 8 ? true : false
+            return cell
+            
+        case .secondListSection:
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ListCollection.reuseID, for: indexPath) as? ListCollection else { return UICollectionViewCell() }
+            cell.iconView.image = item.image ?? UIImage(named: "")
+            cell.nameLabel.text = item.title
+            cell.numberPhotosLabel.text = String(item.numbersOfPhotos)
+            cell.lineSeparators.isHidden = indexPath.row == 2 ? true : false
+            return cell
+            
+        case .albumTwoRows, .albumOneRow:
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PhotoCell.reuseID, for: indexPath) as? PhotoCell else { return UICollectionViewCell() }
+            cell.photoImageView.image = item.image ?? UIImage(named: "")
+            cell.namePhotoLabel.text = item.title
+            cell.numberPhotosLabel.text = String(item.numbersOfPhotos)
+            return cell
     }
+}
 }
 
 extension ViewController: UICollectionViewDelegateFlowLayout {
@@ -194,8 +238,10 @@ extension ViewController: UICollectionViewDelegateFlowLayout {
         return CGSize(width: collectionView.frame.width / 1.5, height: collectionView.frame.height / 3)
     }
 }
-
+    
 class PhotoCell: UICollectionViewCell {
+    
+    static let reuseID = "HorizontalCollection"
     
     override func layoutSubviews() {
         super.layoutSubviews()
@@ -205,13 +251,13 @@ class PhotoCell: UICollectionViewCell {
     var data: Album? {
         didSet {
             guard let data = data else { return }
-            photoItem.image = data.image
-            sectionLabel.text = data.title
+            photoImageView.image = data.image
+            namePhotoLabel.text = data.title
             numberPhotosLabel.text = String(data.numbersOfPhotos)
         }
     }
     
-    fileprivate let sectionLabel: UILabel = {
+    fileprivate let namePhotoLabel: UILabel = {
         let label = UILabel()
         label.textColor = .black
         label.font = .systemFont(ofSize: 18)
@@ -225,7 +271,7 @@ class PhotoCell: UICollectionViewCell {
         return labelNumberPhotos
     }()
     
-    fileprivate let photoItem: UIImageView = {
+    fileprivate let photoImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = #imageLiteral(resourceName: "image5")
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -238,29 +284,28 @@ class PhotoCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        contentView.addSubview(photoItem)
-        contentView.addSubview(sectionLabel)
+        contentView.addSubview(photoImageView)
+        contentView.addSubview(namePhotoLabel)
         setupLabelConstraint()
         setupIntLabelConstraint()
         setupPhotoItemConstraint()
-        
     }
     
     private func setupPhotoItemConstraint() {
-        photoItem.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
-        photoItem.leadingAnchor.constraint(equalTo: contentView.leadingAnchor).isActive = true
-        photoItem.trailingAnchor.constraint(equalTo: contentView.trailingAnchor).isActive = true
-        photoItem.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
+        photoImageView.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
+        photoImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor).isActive = true
+        photoImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor).isActive = true
+        photoImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
     }
     
     private func setupLabelConstraint() {
-        addSubview(sectionLabel)
-        sectionLabel.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(namePhotoLabel)
+        namePhotoLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            sectionLabel.centerYAnchor.constraint(equalTo: bottomAnchor),
-            sectionLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
-            sectionLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 5),
-            sectionLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8)
+            namePhotoLabel.centerYAnchor.constraint(equalTo: bottomAnchor),
+            namePhotoLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
+            namePhotoLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 5),
+            namePhotoLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8)
         ])
     }
     
@@ -268,7 +313,7 @@ class PhotoCell: UICollectionViewCell {
         addSubview(numberPhotosLabel)
         numberPhotosLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            numberPhotosLabel.centerYAnchor.constraint(equalTo: sectionLabel.bottomAnchor, constant: 10),
+            numberPhotosLabel.centerYAnchor.constraint(equalTo: namePhotoLabel.bottomAnchor, constant: 10),
             numberPhotosLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
             numberPhotosLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 5),
             numberPhotosLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8)
@@ -279,6 +324,5 @@ class PhotoCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 }
-
 
 

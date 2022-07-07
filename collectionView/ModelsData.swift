@@ -5,7 +5,8 @@ struct Albums {
     enum TypeAlbum {
         case albumTwoRows
         case albumOneRow
-        case list
+        case firstListSection
+        case secondListSection
     }
 
     let type: TypeAlbum
@@ -15,7 +16,7 @@ struct Albums {
 }
 struct Album {
     var title: String
-    var image: UIImage
+    var image: UIImage?
     var numbersOfPhotos: Int
 }
 
