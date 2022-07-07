@@ -16,6 +16,7 @@
 		ED5E34592872ECB5003364CE /* ListCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5E34582872ECB5003364CE /* ListCollection.swift */; };
 		ED6F9BFE2862276B00E44179 /* ModelsData.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED6F9BFD2862276B00E44179 /* ModelsData.swift */; };
 		ED72E8AE2856817200911C98 /* HeaderFill.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED72E8AD2856817200911C98 /* HeaderFill.swift */; };
+		ED794F2228771052009610A3 /* PhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED794F2128771052009610A3 /* PhotoCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		ED5E34582872ECB5003364CE /* ListCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCollection.swift; sourceTree = "<group>"; };
 		ED6F9BFD2862276B00E44179 /* ModelsData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelsData.swift; sourceTree = "<group>"; };
 		ED72E8AD2856817200911C98 /* HeaderFill.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderFill.swift; sourceTree = "<group>"; };
+		ED794F2128771052009610A3 /* PhotoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,6 +74,7 @@
 				ED72E8AD2856817200911C98 /* HeaderFill.swift */,
 				ED6F9BFD2862276B00E44179 /* ModelsData.swift */,
 				ED5E34582872ECB5003364CE /* ListCollection.swift */,
+				ED794F2128771052009610A3 /* PhotoCell.swift */,
 			);
 			path = collectionView;
 			sourceTree = "<group>";
@@ -150,6 +153,7 @@
 				ED40A200284F3B1000FDD88C /* ViewController.swift in Sources */,
 				ED40A1FC284F3B1000FDD88C /* AppDelegate.swift in Sources */,
 				ED5E34592872ECB5003364CE /* ListCollection.swift in Sources */,
+				ED794F2228771052009610A3 /* PhotoCell.swift in Sources */,
 				ED40A1FE284F3B1000FDD88C /* SceneDelegate.swift in Sources */,
 				ED40A2142853B83C00FDD88C /* tabBar.swift in Sources */,
 				ED6F9BFE2862276B00E44179 /* ModelsData.swift in Sources */,

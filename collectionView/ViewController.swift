@@ -31,20 +31,20 @@ class ViewController: UIViewController {
         
         Albums(type: .firstListSection, title: "Media Types", button: nil, albums: [
             Album(title: "Videos", image: UIImage(systemName: "video"), numbersOfPhotos: 84),
-            Album(title: "Selfies", image: UIImage(systemName: "person.crop.square"), numbersOfPhotos: 148),
-            Album(title: "Live Photos", image: UIImage(systemName: "livephoto"), numbersOfPhotos: 148),
-            Album(title: "Portrait", image: UIImage(systemName: "cube"), numbersOfPhotos: 148),
-            Album(title: "Long Exposure", image: UIImage(systemName: "livephoto"), numbersOfPhotos: 148),
-            Album(title: "Time-lapse", image: UIImage(systemName: "timelapse"), numbersOfPhotos: 148),
-            Album(title: "Slo-mo", image: UIImage(systemName: "slowmo"), numbersOfPhotos: 148),
-            Album(title: "Bursts", image: UIImage(systemName: "square.stack.3d.down.right"), numbersOfPhotos: 148),
-            Album(title: "Screenshots", image: UIImage(systemName: "camera.viewfinder"), numbersOfPhotos: 148)
+            Album(title: "Selfies", image: UIImage(systemName: "person.crop.square"), numbersOfPhotos: 16),
+            Album(title: "Live Photos", image: UIImage(systemName: "livephoto"), numbersOfPhotos: 54),
+            Album(title: "Portrait", image: UIImage(systemName: "cube"), numbersOfPhotos: 50),
+            Album(title: "Long Exposure", image: UIImage(systemName: "livephoto"), numbersOfPhotos: 243),
+            Album(title: "Time-lapse", image: UIImage(systemName: "timelapse"), numbersOfPhotos: 100),
+            Album(title: "Slo-mo", image: UIImage(systemName: "slowmo"), numbersOfPhotos: 4),
+            Album(title: "Bursts", image: UIImage(systemName: "square.stack.3d.down.right"), numbersOfPhotos: 1),
+            Album(title: "Screenshots", image: UIImage(systemName: "camera.viewfinder"), numbersOfPhotos: 90)
         ]),
         
         Albums(type: .secondListSection, title: "Utilities", button: nil, albums: [
-            Album(title: "Imports", image: UIImage(systemName: "square.and.arrow.down"), numbersOfPhotos: 84),
-            Album(title: "Hidden", image: UIImage(systemName: "eye.slash"), numbersOfPhotos: 84),
-            Album(title: "Recently Deleted", image: UIImage(systemName: "trash"), numbersOfPhotos: 84)
+            Album(title: "Imports", image: UIImage(systemName: "square.and.arrow.down"), numbersOfPhotos: 30),
+            Album(title: "Hidden", image: UIImage(systemName: "eye.slash"), numbersOfPhotos: 50),
+            Album(title: "Recently Deleted", image: UIImage(systemName: "trash"), numbersOfPhotos: 20)
         ])
       ]
     
@@ -238,91 +238,3 @@ extension ViewController: UICollectionViewDelegateFlowLayout {
         return CGSize(width: collectionView.frame.width / 1.5, height: collectionView.frame.height / 3)
     }
 }
-    
-class PhotoCell: UICollectionViewCell {
-    
-    static let reuseID = "HorizontalCollection"
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 20, left: 0, bottom: 20, right: 0))
-    }
-    
-    var data: Album? {
-        didSet {
-            guard let data = data else { return }
-            photoImageView.image = data.image
-            namePhotoLabel.text = data.title
-            numberPhotosLabel.text = String(data.numbersOfPhotos)
-        }
-    }
-    
-    fileprivate let namePhotoLabel: UILabel = {
-        let label = UILabel()
-        label.textColor = .black
-        label.font = .systemFont(ofSize: 18)
-        label.textAlignment = .left
-        return label
-    }()
-    
-    fileprivate let numberPhotosLabel: UILabel = {
-        let labelNumberPhotos = UILabel()
-        labelNumberPhotos.textColor = .systemGray
-        return labelNumberPhotos
-    }()
-    
-    fileprivate let photoImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.image = #imageLiteral(resourceName: "image5")
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.contentMode = .scaleAspectFill
-        imageView.layer.cornerRadius = 5
-        imageView.clipsToBounds = true
-        return imageView
-    }()
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        
-        contentView.addSubview(photoImageView)
-        contentView.addSubview(namePhotoLabel)
-        setupLabelConstraint()
-        setupIntLabelConstraint()
-        setupPhotoItemConstraint()
-    }
-    
-    private func setupPhotoItemConstraint() {
-        photoImageView.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
-        photoImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor).isActive = true
-        photoImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor).isActive = true
-        photoImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
-    }
-    
-    private func setupLabelConstraint() {
-        addSubview(namePhotoLabel)
-        namePhotoLabel.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            namePhotoLabel.centerYAnchor.constraint(equalTo: bottomAnchor),
-            namePhotoLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
-            namePhotoLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 5),
-            namePhotoLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8)
-        ])
-    }
-    
-    private func setupIntLabelConstraint() {
-        addSubview(numberPhotosLabel)
-        numberPhotosLabel.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            numberPhotosLabel.centerYAnchor.constraint(equalTo: namePhotoLabel.bottomAnchor, constant: 10),
-            numberPhotosLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
-            numberPhotosLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 5),
-            numberPhotosLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8)
-        ])
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-}
-
-
