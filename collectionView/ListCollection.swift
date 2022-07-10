@@ -2,13 +2,6 @@ import UIKit
 
 class ListCollection: UICollectionViewCell {
     
-    enum Metric {
-        static let indent: CGFloat = 4
-        static let lineHeight: CGFloat = 1
-        static let lineIndent: CGFloat = 48
-        static let iconSize: CGFloat = 28
-    }
-    
     static let reuseID = "VerticalCollection"
     
     lazy var iconView: UIImageView = {
@@ -51,12 +44,18 @@ class ListCollection: UICollectionViewCell {
     lazy var lineSeparators: UIView = {
         let line = UIView()
         line.backgroundColor = .systemGray
+        line.alpha = 0.1
         line.translatesAutoresizingMaskIntoConstraints = false
         return line
     }()
     
     override init(frame: CGRect) {
         super.init(frame: .zero)
+        contentView.addSubview(iconView)
+        contentView.addSubview(lineSeparators)
+        contentView.addSubview(nameLabel)
+        contentView.addSubview(button)
+        contentView.addSubview(numberPhotosLabel)
         configure()
     }
     
@@ -68,11 +67,6 @@ class ListCollection: UICollectionViewCell {
 extension ListCollection {
     
     func configure() {
-        contentView.addSubview(iconView)
-        contentView.addSubview(lineSeparators)
-        contentView.addSubview(nameLabel)
-        contentView.addSubview(button)
-        contentView.addSubview(numberPhotosLabel)
         
         NSLayoutConstraint.activate([
             iconView.heightAnchor.constraint(equalToConstant: Metric.iconSize),
@@ -92,9 +86,20 @@ extension ListCollection {
             button.heightAnchor.constraint(equalToConstant: Metric.iconSize),
             button.widthAnchor.constraint(equalToConstant: Metric.iconSize),
             button.trailingAnchor.constraint(equalTo: layoutMarginsGuide.trailingAnchor, constant: -Metric.indent),
-
+            
             numberPhotosLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor),
             numberPhotosLabel.trailingAnchor.constraint(equalTo: button.leadingAnchor, constant: -Metric.lineHeight),
         ])
     }
+}
+
+extension ListCollection {
+    
+    enum Metric {
+        static let indent: CGFloat = 4
+        static let lineHeight: CGFloat = 1
+        static let lineIndent: CGFloat = 48
+        static let iconSize: CGFloat = 28
+    }
+    
 }

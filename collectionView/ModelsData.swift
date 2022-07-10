@@ -5,8 +5,7 @@ struct Albums {
     enum TypeAlbum {
         case albumTwoRows
         case albumOneRow
-        case firstListSection
-        case secondListSection
+        case list
     }
 
     let type: TypeAlbum

@@ -11,13 +11,13 @@ class TabBar: UITabBarController {
     }
     
     func setupNavigationViewController() {
-          viewControllers = [
-              createNavController(for: ViewController(), title: NSLocalizedString("Library", comment: ""), image: UIImage(systemName: "photo.fill.on.rectangle.fill")),
-              createNavController(for: ViewController(), title: NSLocalizedString("For You", comment: ""), image: UIImage(systemName: "heart.text.square")),
-              createNavController(for: ViewController(), title: NSLocalizedString("Albums", comment: ""), image: UIImage(systemName: "square.stack.fill")),
-              createNavController(for: ViewController(), title: NSLocalizedString("Search", comment: ""), image: UIImage(systemName: "magnifyingglass"))
-          ]
-      }
+        viewControllers = [
+            createNavController(for: ViewController(), title: "Library", image: UIImage(systemName: "photo.fill.on.rectangle.fill")),
+            createNavController(for: ViewController(), title: "For You", image: UIImage(systemName: "heart.text.square")),
+            createNavController(for: ViewController(), title: "Abums", image: UIImage(systemName: "square.stack.fill")),
+            createNavController(for: ViewController(), title: "Search", image: UIImage(systemName: "magnifyingglass"))
+        ]
+    }
     
     fileprivate func createNavController(for rootViewController: UIViewController,
                                          title: String,
@@ -26,7 +26,7 @@ class TabBar: UITabBarController {
         navController.tabBarItem.title = title
         navController.tabBarItem.image = image
         navController.navigationBar.prefersLargeTitles = true
-        rootViewController.navigationItem.title = "Albums"
+        rootViewController.navigationItem.title = title
         return navController
     }
 }

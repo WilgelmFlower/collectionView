@@ -1,14 +1,7 @@
 import UIKit
 
 class ViewController: UIViewController {
-    
-    enum Metric {
-        static let layoutIndent: CGFloat = 12
-        static let leftIndentLayout: CGFloat = 6
-        static let photoRadius: CGFloat = 10
-        static let topIndentVerticalSection: CGFloat = 20
-    }
-    
+
     let data = [
         
         Albums(type: .albumTwoRows, title: "My Albums", button: "See All", albums: [
@@ -29,7 +22,7 @@ class ViewController: UIViewController {
             Album(title: "Autumn2020", image: #imageLiteral(resourceName: "image4"), numbersOfPhotos: 100)
         ]),
         
-        Albums(type: .firstListSection, title: "Media Types", button: nil, albums: [
+        Albums(type: .list, title: "Media Types", button: nil, albums: [
             Album(title: "Videos", image: UIImage(systemName: "video"), numbersOfPhotos: 84),
             Album(title: "Selfies", image: UIImage(systemName: "person.crop.square"), numbersOfPhotos: 16),
             Album(title: "Live Photos", image: UIImage(systemName: "livephoto"), numbersOfPhotos: 54),
@@ -41,7 +34,7 @@ class ViewController: UIViewController {
             Album(title: "Screenshots", image: UIImage(systemName: "camera.viewfinder"), numbersOfPhotos: 90)
         ]),
         
-        Albums(type: .secondListSection, title: "Utilities", button: nil, albums: [
+        Albums(type: .list, title: "Utilities", button: nil, albums: [
             Album(title: "Imports", image: UIImage(systemName: "square.and.arrow.down"), numbersOfPhotos: 30),
             Album(title: "Hidden", image: UIImage(systemName: "eye.slash"), numbersOfPhotos: 50),
             Album(title: "Recently Deleted", image: UIImage(systemName: "trash"), numbersOfPhotos: 20)
@@ -62,10 +55,10 @@ class ViewController: UIViewController {
         configureItem()
         view.addSubview(collectionView)
 
-        collectionView.topAnchor.constraint(equalTo: view.topAnchor, constant: 40).isActive = true
-        collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10).isActive = true
-        collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40).isActive = true
-        collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -40).isActive = true
+        collectionView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         
         collectionView.delegate = self
         collectionView.dataSource = self
@@ -107,7 +100,6 @@ class ViewController: UIViewController {
                 
             case .albumOneRow:
                 
-                
                 let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(0.5))
                 let contentInset = NSDirectionalEdgeInsets(top: 5, leading: 5, bottom: 10, trailing: 5)
                 
@@ -131,7 +123,7 @@ class ViewController: UIViewController {
                 
                 return section
                
-            case .firstListSection:
+            case .list:
                 
                 let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(52))
                 
@@ -144,42 +136,26 @@ class ViewController: UIViewController {
                 
                 section.contentInsets.leading = Metric.layoutIndent
                 
-                let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: itemSize, elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
+                let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: itemSize,
+                                                                         elementKind: UICollectionView.elementKindSectionHeader,
+                                                                         alignment: .top)
                 
                 header.zIndex = Int.max
                 section.boundarySupplementaryItems = [header]
                 
                 return section
-                
-            case .secondListSection:
-                
-                let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(52))
-                
-                let item = NSCollectionLayoutItem(layoutSize: itemSize)
-                item.contentInsets = NSDirectionalEdgeInsets(top: Metric.topIndentVerticalSection, leading: .zero, bottom: .zero, trailing: .zero)
-                
-                let group = NSCollectionLayoutGroup.vertical(layoutSize: itemSize, subitem: item, count: 1)
-                
-                let section = NSCollectionLayoutSection(group: group)
-                
-                section.contentInsets.leading = Metric.layoutIndent
-                
-                let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: itemSize, elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
-                
-                header.zIndex = Int.max
-                section.boundarySupplementaryItems = [header]
-                
-                return section
-                
             }
         }
         return layout
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: HeaderFill.identifier, for: indexPath) as! HeaderFill
-        header.headerTextAndButton(titleSection: data[indexPath.section].title, buttonSection: data[indexPath.section].button ?? "")
-        header.frame.size.height = 68
+        
+        let dataHeader = data[indexPath.section]
+        
+        guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: HeaderFill.identifier, for: indexPath) as? HeaderFill else { return UICollectionReusableView() }
+
+        header.headerTextAndButton(titleSection: dataHeader.title, buttonSection: dataHeader.button ?? "")
         return header
     }
     
@@ -206,30 +182,21 @@ extension ViewController: UICollectionViewDataSource {
         
         switch data.type {
             
-        case .firstListSection:
+        case .list:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ListCollection.reuseID, for: indexPath) as? ListCollection else { return UICollectionViewCell() }
-            cell.iconView.image = item.image ?? UIImage(named: "")
+            cell.iconView.image = item.image
             cell.nameLabel.text = item.title
             cell.numberPhotosLabel.text = String(item.numbersOfPhotos)
-            cell.lineSeparators.isHidden = indexPath.row == 8 ? true : false
-            return cell
-            
-        case .secondListSection:
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ListCollection.reuseID, for: indexPath) as? ListCollection else { return UICollectionViewCell() }
-            cell.iconView.image = item.image ?? UIImage(named: "")
-            cell.nameLabel.text = item.title
-            cell.numberPhotosLabel.text = String(item.numbersOfPhotos)
-            cell.lineSeparators.isHidden = indexPath.row == 2 ? true : false
             return cell
             
         case .albumTwoRows, .albumOneRow:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PhotoCell.reuseID, for: indexPath) as? PhotoCell else { return UICollectionViewCell() }
-            cell.photoImageView.image = item.image ?? UIImage(named: "")
+            cell.photoImageView.image = item.image
             cell.namePhotoLabel.text = item.title
             cell.numberPhotosLabel.text = String(item.numbersOfPhotos)
             return cell
     }
-}
+  }
 }
 
 extension ViewController: UICollectionViewDelegateFlowLayout {
@@ -237,4 +204,15 @@ extension ViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: collectionView.frame.width / 1.5, height: collectionView.frame.height / 3)
     }
+}
+
+extension ViewController {
+    
+    enum Metric {
+        static let layoutIndent: CGFloat = 12
+        static let leftIndentLayout: CGFloat = 6
+        static let photoRadius: CGFloat = 10
+        static let topIndentVerticalSection: CGFloat = 20
+    }
+    
 }
