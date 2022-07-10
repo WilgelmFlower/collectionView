@@ -49,13 +49,22 @@ class ListCollection: UICollectionViewCell {
         return line
     }()
     
+    private lazy var stackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.distribution = .fill
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        return stackView
+    }()
+    
     override init(frame: CGRect) {
         super.init(frame: .zero)
-        contentView.addSubview(iconView)
-        contentView.addSubview(lineSeparators)
-        contentView.addSubview(nameLabel)
-        contentView.addSubview(button)
-        contentView.addSubview(numberPhotosLabel)
+        addSubview(iconView)
+        addSubview(nameLabel)
+        addSubview(numberPhotosLabel)
+        addSubview(button)
+        addSubview(stackView)
+        addSubview(lineSeparators)
         configure()
     }
     
@@ -68,27 +77,24 @@ extension ListCollection {
     
     func configure() {
         
+        stackView.addArrangedSubview(iconView)
+        stackView.addArrangedSubview(nameLabel)
+        stackView.addArrangedSubview(numberPhotosLabel)
+        stackView.addArrangedSubview(button)
+        
         NSLayoutConstraint.activate([
-            iconView.heightAnchor.constraint(equalToConstant: Metric.iconSize),
-            iconView.widthAnchor.constraint(equalToConstant: Metric.iconSize),
-            iconView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
-            iconView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: Metric.indent),
+            
+            stackView.leadingAnchor.constraint(equalTo: layoutMarginsGuide.leadingAnchor),
+            stackView.trailingAnchor.constraint(equalTo: layoutMarginsGuide.trailingAnchor),
+            stackView.topAnchor.constraint(equalTo: layoutMarginsGuide.topAnchor),
+            stackView.bottomAnchor.constraint(equalTo: layoutMarginsGuide.bottomAnchor),
+            
+            button.trailingAnchor.constraint(equalTo: stackView.trailingAnchor, constant: Metric.indent),
             
             lineSeparators.topAnchor.constraint(equalTo: self.bottomAnchor),
             lineSeparators.heightAnchor.constraint(equalToConstant: Metric.lineHeight),
             lineSeparators.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: Metric.lineIndent),
             lineSeparators.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            
-            nameLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor),
-            nameLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: Metric.lineIndent),
-            
-            button.centerYAnchor.constraint(equalTo: self.centerYAnchor),
-            button.heightAnchor.constraint(equalToConstant: Metric.iconSize),
-            button.widthAnchor.constraint(equalToConstant: Metric.iconSize),
-            button.trailingAnchor.constraint(equalTo: layoutMarginsGuide.trailingAnchor, constant: -Metric.indent),
-            
-            numberPhotosLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor),
-            numberPhotosLabel.trailingAnchor.constraint(equalTo: button.leadingAnchor, constant: -Metric.lineHeight),
         ])
     }
 }
@@ -101,5 +107,4 @@ extension ListCollection {
         static let lineIndent: CGFloat = 48
         static let iconSize: CGFloat = 28
     }
-    
 }

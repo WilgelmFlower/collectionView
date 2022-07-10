@@ -36,7 +36,7 @@ class HeaderFill: UICollectionReusableView {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        
+        self.label.text = nil
     }
     
     public func headerTextAndButton(titleSection: String, buttonSection: String) {
