@@ -37,6 +37,7 @@ class HeaderFill: UICollectionReusableView {
     override func prepareForReuse() {
         super.prepareForReuse()
         self.label.text = nil
+        self.button.setTitle(nil, for: .normal)
     }
     
     public func headerTextAndButton(titleSection: String, buttonSection: String) {
@@ -46,8 +47,6 @@ class HeaderFill: UICollectionReusableView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        addSubview(label)
-        addSubview(button)
         addSubview(line)
         addSubview(stackView)
         configure()

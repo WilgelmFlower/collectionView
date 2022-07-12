@@ -59,10 +59,6 @@ class ListCollection: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: .zero)
-        addSubview(iconView)
-        addSubview(nameLabel)
-        addSubview(numberPhotosLabel)
-        addSubview(button)
         addSubview(stackView)
         addSubview(lineSeparators)
         configure()
